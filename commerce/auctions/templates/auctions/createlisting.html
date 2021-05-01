@@ -3,6 +3,7 @@
 {% block body %}
     <h2>Create New Listing</h2>
     <form action="{% url 'createlisting' %}" method="POST">
+        {% csrf_token %}
         <label class="text-danger">Title</label>
         <div class="form-group">
             <input class="form-control" type="text" name="title" required>
@@ -11,7 +12,7 @@
         <div class="form-group">
             <textarea class="form-control" name="description" id="" cols="30" rows="10"></textarea>
         </div>
-        <label class="text-danger">Starting Bid</label>
+        <label class="text-danger">Starting Bid $</label>
         <div class="form-group">
             <input class="form-control" type="number" name="starting_bid" required>
         </div>
@@ -21,7 +22,7 @@
         </div>
         <label class="text-danger">Link of the Image</label>
         <div class="form-group">
-            <input class="form-control" type="text" name="Image_link" required>
+            <input class="form-control" type="text" name="image_link">
         </div>
 
         <input class="btn btn-warning text-light" type="Submit" value = "Create Listing">
