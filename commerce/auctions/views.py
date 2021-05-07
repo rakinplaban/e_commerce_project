@@ -8,7 +8,9 @@ from .models import User,auction_listing
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    return render(request, "auctions/index.html",{
+        'listing' : auction_listing.objects.all()
+    })
 
 
 def login_view(request):
@@ -82,3 +84,10 @@ def create_listing(request):
             "image_link"  : image_link
         })
     return render(request, "auctions/createlisting.html")
+
+
+def display_list(request,list_id):
+    listing = auction_listing.objects.get(id=list_id)
+    return render(request,"auctions/list.html",{
+        "list" : listing
+    })

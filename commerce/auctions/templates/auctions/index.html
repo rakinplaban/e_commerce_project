@@ -2,8 +2,13 @@
 
 {% block body %}
     <h2>Active Listings</h2>
-    <ul>
-        <li>{{ title }} </li>
+    <ul class="list-group">
+        {% for listing in listing %}
+                <li class="list-group-item"> 
+                    <img src="{{ listing.img }}" alt="image not available" height="60px" width="80px"> {{ listing.title }} 
+                </li>
+            
+        {% endfor %}
     </ul>
     TODO
 {% endblock %}
