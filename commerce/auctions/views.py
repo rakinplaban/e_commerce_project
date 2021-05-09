@@ -87,7 +87,7 @@ def create_listing(request):
 
 
 def display_list(request,list_id):
-    listing = auction_listing.objects.get(id=list_id)
+    listing = auction_listing.objects.get(pk=list_id)
     return render(request,"auctions/list.html",{
         "list" : listing
     })
