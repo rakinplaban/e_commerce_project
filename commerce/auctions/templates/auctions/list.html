@@ -2,14 +2,14 @@
 
 {% block body %}
 
-    <h1>Product: {{ list.title }}</h1>
+    <h1>{{ list.title }}</h1>
     <img src="{{ list.img }}" alt="No availabel" height="200px" width="300px">
     <h3>Description</h3>
     <p>{{ list.description }}</p>
 
-    <h4>Starting bid : {{ list.starting_bid }}.00 $</h4>
+    <h6 class="text text-danger">Starting bid : {{ list.starting_bid }}.00 $</h6>
 
-    <h4>Cetagory : {{ list.category }}</h4>
+    <h6>Cetagory : {{ list.category }}</h6>
 
     
 

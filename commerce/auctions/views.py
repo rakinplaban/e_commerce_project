@@ -94,7 +94,7 @@ def display_list(request,list_id):
 
 def categories(request):
     listee = auction_listing.objects.all()
-    liste = listee.values('category').distinct()
+    liste = listee.order_by('category').values('category').distinct()
     return render(request,"auctions/categories.html",{
         "category" : liste
     })
