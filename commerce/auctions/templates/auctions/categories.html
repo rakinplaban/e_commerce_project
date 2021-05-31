@@ -3,9 +3,11 @@
 {% block body %}
     <ul class="list-group">
         {% for cat in category %}
-            <li class="list-group-item">
-                <a id="atag1" href="#"><h6>{{ cat.category }}</h6></a>
-            </li>
+            <a id="atag1" href="{% url 'displaycat' cat.category %}">
+                <li class="list-group-item">
+                    <h6>{{ cat.category }}</h6>
+                </li>
+            </a>
         {% endfor %}
     </ul>
 {% endblock %}

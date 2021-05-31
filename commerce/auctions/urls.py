@@ -11,4 +11,5 @@ urlpatterns = [
     path("mylist", views.create_listing, name="mylist"),
     path("<int:list_id>",views.display_list,name="displaylistitem"),
     path("categorise",views.categories,name="categories"),
+    path("<str:category>",views.displaycat,name="displaycat"),
 ]
