@@ -64,25 +64,28 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
-def create_listing(request):
+def create_listing(request):  
     if request.method == "POST":
-        title = request.POST["title"]
-        description = request.POST["description"]
-        starting_bid = request.POST["starting_bid"]
-        category = request.POST["category"]
-        image_link = request.POST["image_link"]
+        if request.user.is_authenticated:
+            author = request.session.user
+            title = request.POST["title"]
+            description = request.POST["description"]
+            starting_bid = request.POST["starting_bid"]
+            category = request.POST["category"]
+            image_link = request.POST["image_link"]
 
-        create_listingdata = auction_listing(title = title,description = description,starting_bid = starting_bid,
-            category = category,img = image_link)
-        create_listingdata.save()
+            create_listingdata = auction_listing(title = title,description = description,starting_bid = starting_bid,
+                category = category,img = image_link)
+            create_listingdata.save()
 
-        return render(request,"auctions/mylist.html",{
-            "title" : title,
-            "description" : description,
-            "starting_bid" : starting_bid,
-            "category" : category,
-            "image_link"  : image_link
-        })
+            return render(request,"auctions/mylist.html",{
+                "author" : author,
+                "title" : title,
+                "description" : description,
+                "starting_bid" : starting_bid,
+                "category" : category,
+                "image_link"  : image_link
+            })
     return render(request, "auctions/createlisting.html")
 
 

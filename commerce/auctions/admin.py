@@ -4,7 +4,7 @@ from .models import User,auction_listing
 # Register your models here.
 
 class auction_listing_admin(admin.ModelAdmin):
-    list_display = ("id","title","category","starting_bid")
+    list_display = ("id","title","author","category","starting_bid")
 
 
 admin.site.register(User,)
