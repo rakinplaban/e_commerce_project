@@ -7,7 +7,8 @@ class User(AbstractUser):
     pass
 
 class auction_listing(models.Model):
-    author = models.ForeignKey(User,on_delete=CASCADE)
+    author = models.ForeignKey(User,default=1,on_delete=CASCADE)
+    creating_date = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=100)
     description = models.TextField()
     starting_bid = models.IntegerField()

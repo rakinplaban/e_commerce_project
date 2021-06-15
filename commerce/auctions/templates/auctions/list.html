@@ -4,6 +4,7 @@
 
     <h1>{{ list.title }}</h1>
     <h5>Posted by : {{ list.author.username|title }}</h5>
+    <h6>Created on: {{ list.creating_date }}</h6>
     <img src="{{ list.img }}" alt="No availabel" height="200px" width="300px">
     <h3>Description</h3>
     <p>{{ list.description }}</p>
