@@ -88,7 +88,7 @@ def create_listing(request):
                 "category" : category,
                 "image_link"  : image_link
             })
-
+    return render(request, "auctions/createlisting.html")
 
 
 def display_list(request,list_id):
