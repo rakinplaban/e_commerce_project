@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from .forms import auction_listing_form
 from .models import User,auction_listing
+from datetime import datetime
 
 
 def index(request):
@@ -66,22 +67,28 @@ def register(request):
 
 def create_listing(request):  
     if request.method == "POST":
-        form = auction_listing_form(request.POST)
-        if form.is_valid():
-            listing = form.save(commit=False)
-            listing.author = request.user
-            listing.save()
+        if request.user.is_authenticated:
+            author = request.user
+            creating_date = datetime.now()
+            title = request.POST["title"]
+            description = request.POST["description"]
+            starting_bid = request.POST["starting_bid"]
+            category = request.POST["category"]
+            image_link = request.POST["image_link"]
+
+            create_listingdata = auction_listing(title = title,author = author,creating_date=creating_date ,description = description,starting_bid = starting_bid,
+                category = category,img = image_link)
+            create_listingdata.save()
             return render(request,"auctions/mylist.html",{
                 "title" : title,
+                "author" : author,
+                "creating_date" : creating_date,
                 "description" : description,
                 "starting_bid" : starting_bid,
                 "category" : category,
                 "image_link"  : image_link
             })
 
-        else:
-            return HttpResponseRedirect(reverse(createlisting))
-    return render(request, "auctions/createlisting.html")
 
 
 def display_list(request,list_id):
