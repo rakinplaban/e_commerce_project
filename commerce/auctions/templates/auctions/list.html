@@ -4,7 +4,13 @@
 
     <h1>{{ list.title }}</h1>
     <h5>Posted by : {{ list.author.username|title }}</h5>
-    <h6>Created on: {{ list.creating_date }}</h6>
+    <h6>Created on: 
+        {% load tz %}
+
+        {% localtime on %}
+            {{ list.creating_date }}
+        {% endlocaltime %}
+    </h6>
     <img src="{{ list.img }}" alt="No availabel" height="200px" width="300px">
     <h3>Description</h3>
     <p>{{ list.description }}</p>
@@ -13,9 +19,17 @@
 
     <h6>Cetagory : {{ list.category }}</h6>
     
-    <div style="margin-top: 2%;">
-        <button class="btn btn-danger">Close</button>
-    </div>
+    {% if user.id is list.author.id %}
+        <div style="margin-top: 2%;">
+         <button class="btn btn-danger">Close</button>
+        </div>
+
+    {% else %}
+        <form action="list.html" method="POST">
+            <input type="number">
+            <input type="submit" value="Submit">
+        </form>
+    {% endif %}
     
     
     
