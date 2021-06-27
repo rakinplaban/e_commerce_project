@@ -6,32 +6,63 @@
     <h5>Posted by : {{ list.author.username|title }}</h5>
     <h6>Created on: 
         {% load tz %}
-
-        {% localtime on %}
-            {{ list.creating_date }}
-        {% endlocaltime %}
+        {{ list.creating_date|timezone:"Asia/Dhaka" }}
+        
     </h6>
     <img src="{{ list.img }}" alt="No availabel" height="200px" width="300px">
     <h3>Description</h3>
     <p>{{ list.description }}</p>
 
-    <h6 class="text text-danger">Starting bid : {{ list.starting_bid }}.00 $</h6>
+    <h6 class="text text-danger">Starting bid : {{ list.starting_bid|floatformat:2 }} $</h6>
 
     <h6>Cetagory : {{ list.category }}</h6>
+
+    {% if user.is_authenticated %}
     
-    {% if user.id is list.author.id %}
-        <div style="margin-top: 2%;">
-         <button class="btn btn-danger">Close</button>
+        {% if user.id is list.author.id %}
+            <div style="margin-top: 2%;">
+            <button class="btn btn-danger">Close</button>
+         </div>
+
+        {% else %}
+            <form action="list.html" method="POST" class="form-inline">
+                {% csrf_token %}
+                <div>
+                    <input type="number" value="bids" class="form-control">
+                    <input type="submit" value="Submit" class="btn btn-warning text-light">  
+                </div>    
+                   
+            </form>
+        {% endif %}
+    {% else %}
+
+        <div class="border border-warning">
+             Please Log in for bid, <a href="{% url 'login' %}" class="btn btn-danger">login</a>
         </div>
 
-    {% else %}
-        <form action="list.html" method="POST">
-            <input type="number">
-            <input type="submit" value="Submit">
-        </form>
     {% endif %}
+
+
     
+    <br><hr>
+    <h1>Comment Section...</h1>
+    <hr>
+    <form action="#" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form }}
+        </div>
+        
+        <input type="submit" value="Post" class="btn btn-primary">
+           
+    </form>
+    <hr>
+    {% for comment in comment %}
+        <strong>{{comment.user}}-{{comment.date}}</strong>
+        {{comment.content}}
+    {% endfor %}
     
+  
     
 
 {% endblock %}

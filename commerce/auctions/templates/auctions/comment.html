@@ -1,0 +1,21 @@
+{% extends "auctions/list.html" %}
+
+{% block comment %}
+
+    
+
+    <br><hr>
+    <h1>Comment Section...</h1>
+    <hr>
+    <form action="{% url 'comment' %}" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Post" class="btn btn-primary">
+           
+    </form>
+    <hr>
+    
+  
+    
+
+{% endblock %}

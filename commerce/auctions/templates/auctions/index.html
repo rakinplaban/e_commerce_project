@@ -18,7 +18,7 @@
                                     <h3 style="color: black;">{{ listing.title }}</h3>
                                     <br>
                                     <p style="color: black;">{{ listing.description }}</p>
-                                    <h6 class="text text-danger">Starting bid: {{listing.starting_bid }}.00 $</h6>
+                                    <h6 class="text text-danger">Starting bid: {{listing.starting_bid|floatformat:2 }} $</h6>
                                 </div>
                                 
                             </td>

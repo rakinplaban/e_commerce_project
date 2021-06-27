@@ -1,10 +1,10 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from .forms import auction_listing_form
-from .models import User,auction_listing
+from .models import User, auction_listing,comment
+from .forms import comment_form
 from datetime import datetime
 
 
@@ -90,6 +90,39 @@ def create_listing(request):
             })
     return render(request, "auctions/createlisting.html")
 
+def biding(request,bid):
+    if request.method == "POST":
+        auction = request.POST["auction"]
+        bid = request.POST["bid"]
+        if bid <= auction.starting_bid:
+            return render(request,"auctions/list.html",{
+                "message" : "Bid must be greater then starting bid."})
+        else:
+            bids = bids(auction = auction,bid = bid)
+            bids.save()
+        return render(request,"auctions/list.html",{
+            "auction" : auction,
+            "bid" : bid
+        })
+
+def comment(request,id):
+    if request.method == "POST":
+        user = request.user
+        post = get_object_or_404(auction_listing,pk=id)
+        date = datetime.now()
+        content = comment_form(request.POST)
+        content.save()
+        comments = comments(user=user,post=post,date=date,content=content)
+        return render(request,"auctions/list.html",{
+            "user" : user,
+            "post" : post,
+            "date" : date,
+            "content" : content
+        })
+    return render(request,"auctions/list.html",{
+        "form" : comment_form()
+    })
+       
 
 def display_list(request,list_id):
     listing = auction_listing.objects.get(pk=list_id)
@@ -108,4 +141,10 @@ def displaycat(request,category):
     listee = auction_listing.objects.filter(category=category)
     return render(request,"auctions/index.html",{
         "listing" : listee
+    })
+
+def displaycomment(request,comment_id):
+    comment = comment.objects.all(pk = comment_id)
+    return render(request,"auctions/list.html",{
+        "comment" : comment
     })
