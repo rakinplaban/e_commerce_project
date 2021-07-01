@@ -42,27 +42,28 @@
 
     {% endif %}
 
-
     
     <br><hr>
-    <h1>Comment Section...</h1>
+    <h1>Comments [{{list.Comments.count}}]</h1>
     <hr>
-    <form action="#" method="POST">
+    <form action="" method="POST" class="form-inline">
         {% csrf_token %}
         <div class="form-group">
-            {{ form }}
-        </div>
-        
-        <input type="submit" value="Post" class="btn btn-primary">
-           
+            {{ form.as_table }}
+            <input type="submit" name="form" value="Post" class="btn btn-primary">
+        </div>      
     </form>
     <hr>
-    {% for comment in comment %}
-        <strong>{{comment.user}}-{{comment.date}}</strong>
+   {% for comment in list.Comments.all %}
+        <strong>{{comment.author}}</strong>
+        <small>{{comment.date|timezone:"Asia/Dhaka"}}</small><br>
         {{comment.content}}
+        <hr>
+
+    {% empty %}
+        <p>No comments yet..</p>
     {% endfor %}
     
-  
     
 
 {% endblock %}

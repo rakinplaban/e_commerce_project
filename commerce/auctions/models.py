@@ -17,20 +17,23 @@ class auction_listing(models.Model):
 
     def __str__(self):
         return f"{self.id} : {self.title}  Category {self.category} Starting price {self.starting_bid}"
-
+'''
 class bids(models.Model):
     auction = models.ForeignKey(auction_listing,on_delete=CASCADE)
     bid = models.FloatField()
-
+'''
 
 class comment(models.Model):
-    user = models.ForeignKey(User,on_delete=CASCADE,related_name="Commenter")
+    author = models.ForeignKey(User,on_delete=CASCADE,related_name="commenter")
     post = models.ForeignKey(auction_listing,related_name="Comments",on_delete=CASCADE)
     date = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
 
     def __str__(self):
-        return f"user: {self.user}, {self.post.title}, comment : {self.content}"
+        #try:
+        return f"{self.content}"
+        #except author.RelatedObjectDoesNotExist:
+        #    return f"{self.post.title} : {self.content}"
 
 
     
