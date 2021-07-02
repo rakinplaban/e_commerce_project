@@ -1,5 +1,23 @@
 from django import forms
-from .models import comment
+from .models import comment,bids
+
+class bid_form(forms.ModelForm):
+    class Meta:
+        model = bids
+        fields = ['bid',]
+
+        labels = {
+            'bid' : ''
+        }
+
+        widgets = {
+            'bid' : forms.NumberInput(attrs={
+                'class' : 'form-control',
+                'placeholder' : 'Bid Here ... ',
+                'rows' : 1,
+                'cols' : 100
+            })
+        }
 
 class comment_form(forms.ModelForm):
     class Meta:

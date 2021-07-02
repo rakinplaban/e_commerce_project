@@ -17,11 +17,15 @@ class auction_listing(models.Model):
 
     def __str__(self):
         return f"{self.id} : {self.title}  Category {self.category} Starting price {self.starting_bid}"
-'''
+
 class bids(models.Model):
     auction = models.ForeignKey(auction_listing,on_delete=CASCADE)
+    user = models.ForeignKey(User,on_delete=CASCADE)
     bid = models.FloatField()
-'''
+
+    def __str__(self):
+        return f"{self.bid}"
+
 
 class comment(models.Model):
     author = models.ForeignKey(User,on_delete=CASCADE,related_name="commenter")

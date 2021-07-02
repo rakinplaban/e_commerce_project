@@ -28,7 +28,7 @@
             <form action="list.html" method="POST" class="form-inline">
                 {% csrf_token %}
                 <div>
-                    <input type="number" value="bids" class="form-control">
+                    {{ bform.as_table }}
                     <input type="submit" value="Submit" class="btn btn-warning text-light">  
                 </div>    
                    
