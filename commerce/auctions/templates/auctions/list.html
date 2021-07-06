@@ -25,11 +25,11 @@
          </div>
 
         {% else %}
-            <form action="list.html" method="POST" class="form-inline">
+            <form action="" method="POST" class="form-inline">
                 {% csrf_token %}
                 <div>
                     {{ bform.as_table }}
-                    <input type="submit" value="Submit" class="btn btn-warning text-light">  
+                    <input type="submit" name="bform" value="Submit" class="btn btn-warning text-light">  
                 </div>    
                    
             </form>

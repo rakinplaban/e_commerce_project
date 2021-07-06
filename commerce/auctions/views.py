@@ -132,25 +132,36 @@ def display_list(request,list_id):
         
         if request.user.is_authenticated:
             form = comment_form(request.POST)
+            bform = bid_form(request.POST)
             author = request.user
             date = datetime.now()
             post = listing
+            user = request.user
+            #auction = listing
             if form.is_valid():
                 content = form.save(commit = False)
                 commentdata = comment(author = author,date=date,post=post,content=content)
                 commentdata.save()
+
+            if bform.is_valid():
+                bid = bform.save(commit=False)
+                biddata = bids(user=user,auction=post,bid=bid)
+                biddata.save()
             return HttpResponseRedirect(reverse("displaylistitem",kwargs={"list_id" : list_id}))
            
+
         else:
             return render(request,"auctions/list.html",{
                 "message" : "Please log in for comment!"
             })
     else:
         form = comment_form()
+        bform = bid_form()
 
     return render(request,"auctions/list.html",{
         "list" : listing,
-        "form" : form
+        "form" : form,
+        "bform" : bform
     })
 
 def categories(request):

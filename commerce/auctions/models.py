@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.deletion import CASCADE
+from django.core.validators import MinValueValidator
 
 
 class User(AbstractUser):
@@ -21,7 +22,7 @@ class auction_listing(models.Model):
 class bids(models.Model):
     auction = models.ForeignKey(auction_listing,on_delete=CASCADE)
     user = models.ForeignKey(User,on_delete=CASCADE)
-    bid = models.FloatField()
+    bid = models.FloatField(validators=[MinValueValidator(0.01)])
 
     def __str__(self):
         return f"{self.bid}"
@@ -40,4 +41,4 @@ class comment(models.Model):
         #    return f"{self.post.title} : {self.content}"
 
 
-    
+type(bids.bid)    

@@ -15,7 +15,9 @@ class bid_form(forms.ModelForm):
                 'class' : 'form-control',
                 'placeholder' : 'Bid Here ... ',
                 'rows' : 1,
-                'cols' : 100
+                'cols' : 100,
+                'step' : 0.01,
+                'type' : 'number'
             })
         }
 
