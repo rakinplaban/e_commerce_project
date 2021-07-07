@@ -144,9 +144,14 @@ def display_list(request,list_id):
                 commentdata.save()
 
             if bform.is_valid():
-                bid = bform.save(commit=False)
-                biddata = bids(user=user,auction=post,bid=bid)
-                biddata.save()
+                instance = bform.save(commit=False)
+                instance.user = user
+                instance.auction = post
+                #instance.bid = bid
+                instance.save()
+                #biddata = bids(user=user,auction=post,bid=instance)
+                #biddata.save()
+                
             return HttpResponseRedirect(reverse("displaylistitem",kwargs={"list_id" : list_id}))
            
 
