@@ -182,3 +182,21 @@ def displaycat(request,category):
         "listing" : listee
     })
 
+
+def status(request,list_id):
+    listing = auction_listing.objects.get(pk=list_id)
+    
+    if request.method == "POST" and listing.status is True:
+        #if listing.status is True:
+        listing.status = False
+        listing.save()
+    else:
+        listing.status = True
+        listing.save()
+
+    
+    #status = listing.status
+    #listdata = auction_listing(status=status)
+    #listdata.save()
+    return HttpResponseRedirect(reverse("displaylistitem",kwargs={"list_id":list_id}))
+

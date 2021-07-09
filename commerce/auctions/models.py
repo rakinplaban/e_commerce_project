@@ -15,6 +15,7 @@ class auction_listing(models.Model):
     starting_bid = models.FloatField()
     category = models.CharField(max_length=120)
     img = models.URLField()
+    status = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.id} : {self.title}  Category {self.category} Starting price {self.starting_bid}"
