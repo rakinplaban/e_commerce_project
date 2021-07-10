@@ -133,6 +133,10 @@ def display_list(request,list_id):
     if listing.favourite.filter(id=request.user.id).exists():
         fav = True
 
+    status = True
+    if listing.status is False:
+        status = False
+
     if request.method == "POST":
         
         if request.user.is_authenticated:
@@ -172,7 +176,8 @@ def display_list(request,list_id):
         "list" : listing,
         "form" : form,
         "bform" : bform,
-        "fav" : fav
+        "fav" : fav,
+        "status" : status
     })
 
 def categories(request):
@@ -190,21 +195,16 @@ def displaycat(request,category):
 
 
 def status(request,list_id):
-    listing = auction_listing.objects.get(pk=list_id)
+    listing = get_object_or_404(auction_listing,id = list_id)
     
-    if request.method == "POST" and listing.status is True:
-        #if listing.status is True:
+    if listing.status is True:
         listing.status = False
         listing.save()
     else:
         listing.status = True
         listing.save()
 
-    
-    #status = listing.status
-    #listdata = auction_listing(status=status)
-    #listdata.save()
-    return HttpResponseRedirect(reverse("displaylistitem",kwargs={"list_id":list_id}))
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 def favourite(request,id):
     listing = get_object_or_404(auction_listing,id=id)

@@ -26,33 +26,33 @@
     {% if user.is_authenticated %}
     
         {% if user.id is list.author.id %}
-            {% if list.status %}
-                <div style="margin-top: 2%;">
-                    <form action="{% url 'status' list.id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">Close</button>
-                    </form>
-                    
-                </div>
+            {% if status %}
+                <a href="{% url 'status' list.id %}" class="btn btn-danger">Close</a>
             {% else %}
                 <p class="bg bg-success text-light">Closed</p>
+                <a href="{% url 'status' list.id %}" class="btn btn-success">Reopen</a>
             {% endif %}
 
         {% else %}
-            <form action="" method="POST" class="form-inline">
-                {% csrf_token %}
-                <div>
-                    {{ bform.as_table }}
-                    <input type="submit" name="bform" value="Submit" class="btn btn-warning text-light">  
-                </div>    
+            {% if status %}
+                <form action="" method="POST" class="form-inline">
+                    {% csrf_token %}
+                    <div>
+                        {{ bform.as_table }}
+                        <input type="submit" name="bform" value="Submit" class="btn btn-warning text-light">  
+                    </div>    
                    
-            </form>
+                </form>
+            {% else %} 
+                <p>Sorry! This item is closed. 😢</p>
+            {% endif %}
         {% endif %}
     {% else %}
-
-        <div class="border border-warning">
-             Please Log in for bid, <a href="{% url 'login' %}" class="btn btn-danger">login</a>
-        </div>
+       
+            <div class="border border-warning">
+                Please Log in for bid, <a href="{% url 'login' %}" class="btn btn-danger">login</a>
+            </div>
+        
 
     {% endif %}
 

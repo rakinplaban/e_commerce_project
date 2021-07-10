@@ -1,7 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Active Listings</h2>
+    
     <ul class="list-group">
         {% for listing in listing %}
             <a style="text-decoration: none;" href="{% url 'displaylistitem' listing.id %}"> 
