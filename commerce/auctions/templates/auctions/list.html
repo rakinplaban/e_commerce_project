@@ -1,7 +1,13 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-
+    {% if user.is_authenticated %}
+        {% if fav %}
+            <a href="{% url 'favourite' list.id %}" class="btn btn-secondary">Unatchlist</a>
+        {% else %} 
+            <a href="{% url 'favourite' list.id %}" class="btn btn-secondary">Watchlist</a>
+        {% endif %}
+    {% endif %}
     <h1>{{ list.title }}</h1>
     <h5>Posted by : {{ list.author.username|title }}</h5>
     <h6>Created on: 

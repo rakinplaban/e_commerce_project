@@ -10,7 +10,7 @@ from datetime import datetime
 
 def index(request):
     return render(request, "auctions/index.html",{
-        'listing' : auction_listing.objects.all()
+        'listing' : auction_listing.objects.filter(status=True)
     })
 
 
@@ -128,6 +128,11 @@ def comment(request,id):
 def display_list(request,list_id):
     listing = auction_listing.objects.get(pk=list_id)
 
+    fav = False
+
+    if listing.favourite.filter(id=request.user.id).exists():
+        fav = True
+
     if request.method == "POST":
         
         if request.user.is_authenticated:
@@ -166,7 +171,8 @@ def display_list(request,list_id):
     return render(request,"auctions/list.html",{
         "list" : listing,
         "form" : form,
-        "bform" : bform
+        "bform" : bform,
+        "fav" : fav
     })
 
 def categories(request):
@@ -200,3 +206,17 @@ def status(request,list_id):
     #listdata.save()
     return HttpResponseRedirect(reverse("displaylistitem",kwargs={"list_id":list_id}))
 
+def favourite(request,id):
+    listing = get_object_or_404(auction_listing,id=id)
+    if listing.favourite.filter(id = request.user.id).exists():
+        listing.favourite.remove(request.user)
+    else:
+        listing.favourite.add(request.user)
+    
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+def watchlist(request):
+    listing = auction_listing.objects.filter(favourite=request.user)
+    return render(request,"auctions/watchlist.html",{
+        "listing" : listing
+    })

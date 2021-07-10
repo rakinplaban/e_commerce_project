@@ -11,6 +11,8 @@ urlpatterns = [
     path("mylist", views.create_listing, name="mylist"),
     path("<int:list_id>",views.display_list,name="displaylistitem"),
     path("<int:list_id>", views.status,name="status"),
+    path("fav/<int:id>",views.favourite,name="favourite"),
+    path("watchlist",views.watchlist,name="watchlist"),
     path("categorise",views.categories,name="categories"),
     path("<str:category>",views.displaycat,name="displaycat"),
 ]

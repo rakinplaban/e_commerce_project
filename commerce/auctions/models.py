@@ -15,7 +15,9 @@ class auction_listing(models.Model):
     starting_bid = models.FloatField()
     category = models.CharField(max_length=120)
     img = models.URLField()
+    favourite = models.ManyToManyField(User,blank=True,related_name="favourite")
     status = models.BooleanField(default=True)
+    #newmanager = NewManager()
 
     def __str__(self):
         return f"{self.id} : {self.title}  Category {self.category} Starting price {self.starting_bid}"
@@ -42,4 +44,4 @@ class comment(models.Model):
         #    return f"{self.post.title} : {self.content}"
 
 
-type(bids.bid)    
+ 
