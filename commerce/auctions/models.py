@@ -14,6 +14,7 @@ class auction_listing(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     starting_bid = models.FloatField()
+    current_price = models.FloatField(default=0.00)
     category = models.CharField(max_length=120)
     img = models.URLField()
     favourite = models.ManyToManyField(User,blank=True,related_name="favourite")

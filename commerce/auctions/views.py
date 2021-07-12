@@ -7,6 +7,7 @@ from .models import User, auction_listing, bids, comment
 from .forms import comment_form, bid_form
 from datetime import datetime
 from django.core.exceptions import ValidationError
+from django.contrib import messages
 
 
 def index(request):
@@ -157,10 +158,14 @@ def display_list(request,list_id):
                 instance = bform.save(commit=False)
                 instance.user = user
                 instance.auction = post
-                if float(instance.bid) > post.starting_bid:
+                if (float(instance.bid) > post.starting_bid) and (float(instance.bid)> post.current_price):
                     instance.save()
+                    listing.current_price = instance.bid
+                    listing.save()
+                    messages.success(request,"Congratulations! Your bid has been accepted. 😊")
                 else:
-                    raise ValidationError("Please insert amount greater than starting bid.")
+                    #raise ValidationError("Please insert amount greater than starting bid and current price.")
+                    messages.error(request,"Sorry! Please insert amount more then current price & starting bid.")
                 #biddata = bids(user=user,auction=post,bid=instance)
                 #biddata.save()
 

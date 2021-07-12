@@ -20,7 +20,7 @@
     <p>{{ list.description }}</p>
 
     <h6 class="text text-danger">Starting bid : {{ list.starting_bid|floatformat:2 }} $</h6>
-
+    <h6 class="text text-success">Current price : {{ list.current_price|floatformat:2 }} $</h6>
     <h6>Cetagory : {{ list.category }}</h6>
 
     {% if user.is_authenticated %}
@@ -34,6 +34,14 @@
             {% endif %}
 
         {% else %}
+
+            {% if messages %}
+                <ul class="messages" style="list-style: none;">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
             {% if status %}
                 <form action="" method="POST" class="form-inline">
                     {% csrf_token %}
@@ -43,12 +51,9 @@
                     </div>    
                    
                 </form>
-                {% if mini_error %}
-                    <span class="alert alert-warning" role="alert">Amount must be greater then current price.</span>
-                {% endif %}
-                {% if congrats %} 
-                    <span class="bg bg-success text-light">Congratulations!😀 You won!</span>
-                {% endif %}
+                
+                
+
             {% else %} 
                 <p>Sorry! This item is closed. 😢</p>
             {% endif %}
