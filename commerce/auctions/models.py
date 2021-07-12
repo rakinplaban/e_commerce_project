@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
 
 
 class User(AbstractUser):
@@ -23,12 +24,17 @@ class auction_listing(models.Model):
         return f"{self.id} : {self.title}  Category {self.category} Starting price {self.starting_bid}"
 
 class bids(models.Model):
-    auction = models.ForeignKey(auction_listing,on_delete=CASCADE)
+    auction = models.ForeignKey(auction_listing,on_delete=CASCADE,related_name="auction")
     user = models.ForeignKey(User,on_delete=CASCADE)
     bid = models.FloatField(validators=[MinValueValidator(0.01)])
 
     def __str__(self):
         return f"{self.bid}"
+
+    """def clean(self):
+        super().clean()
+        if self.bid <= self.auction.starting_bid:
+            raise ValidationError("Sorry! Bid must be greater then the starting_bid")"""
 
 
 class comment(models.Model):

@@ -6,6 +6,7 @@ from django.urls import reverse
 from .models import User, auction_listing, bids, comment
 from .forms import comment_form, bid_form
 from datetime import datetime
+from django.core.exceptions import ValidationError
 
 
 def index(request):
@@ -132,7 +133,7 @@ def display_list(request,list_id):
 
     if listing.favourite.filter(id=request.user.id).exists():
         fav = True
-
+    mini_error = False
     status = True
     if listing.status is False:
         status = False
@@ -156,10 +157,13 @@ def display_list(request,list_id):
                 instance = bform.save(commit=False)
                 instance.user = user
                 instance.auction = post
-                #instance.bid = bid
-                instance.save()
+                if float(instance.bid) > post.starting_bid:
+                    instance.save()
+                else:
+                    raise ValidationError("Please insert amount greater than starting bid.")
                 #biddata = bids(user=user,auction=post,bid=instance)
                 #biddata.save()
+
                 
             return HttpResponseRedirect(reverse("displaylistitem",kwargs={"list_id" : list_id}))
            
@@ -177,8 +181,10 @@ def display_list(request,list_id):
         "form" : form,
         "bform" : bform,
         "fav" : fav,
-        "status" : status
+        "status" : status,
+        "ValidationError" : ValidationError
     })
+
 
 def categories(request):
     listee = auction_listing.objects.all()
