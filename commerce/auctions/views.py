@@ -206,7 +206,7 @@ def categories(request):
     })
 
 def displaycat(request,category):
-    listee = auction_listing.objects.filter(category=category)
+    listee = auction_listing.objects.filter(category=category,status=True)
     return render(request,"auctions/index.html",{
         "listing" : listee
     })

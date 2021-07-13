@@ -18,7 +18,11 @@
                                     <h3 style="color: black;">{{ listing.title }}</h3>
                                     <br>
                                     <p style="color: black;">{{ listing.description }}</p>
-                                    <h6 class="text text-danger">Starting bid: {{listing.starting_bid|floatformat:2 }} $</h6>
+                                    {% if listing.starting_bid > listing.current_price %}
+                                        <h6 class="text text-danger">Current Price: {{listing.starting_bid|floatformat:2 }} $</h6>
+                                    {% else %} 
+                                        <h6 class="text text-danger">Current Price: {{listing.current_price|floatformat:2 }} $</h6>
+                                    {% endif %}
                                 </div>
                                 
                             </td>
