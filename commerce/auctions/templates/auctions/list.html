@@ -31,6 +31,15 @@
             {% else %}
                 <p class="bg bg-success text-light">Closed</p>
                 <a href="{% url 'status' list.id %}" class="btn btn-success">Reopen</a>
+                
+                {% if messages %}
+                    <ul class="messages" style="list-style: none;">
+                        {% for message in messages %}
+                            <li{% if message.tags %} id="msg" class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                
             {% endif %}
 
         {% else %}
@@ -38,10 +47,12 @@
             {% if messages %}
                 <ul class="messages" style="list-style: none;">
                     {% for message in messages %}
-                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        <li{% if message.tags %} id="msg" class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                     {% endfor %}
                 </ul>
             {% endif %}
+
+
             {% if status %}
                 <form action="" method="POST" class="form-inline">
                     {% csrf_token %}

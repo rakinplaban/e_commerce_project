@@ -18,6 +18,7 @@ class auction_listing(models.Model):
     category = models.CharField(max_length=120)
     img = models.URLField()
     favourite = models.ManyToManyField(User,blank=True,related_name="favourite")
+    winner = models.ForeignKey(User,blank=True,related_name="winner",on_delete=CASCADE,null=True)
     status = models.BooleanField(default=True)
     #newmanager = NewManager()
 

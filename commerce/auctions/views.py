@@ -138,6 +138,12 @@ def display_list(request,list_id):
     status = True
     if listing.status is False:
         status = False
+        #if listing.winner is None:
+            #messages.error(request,"Nobody bought this item.")
+        #else:
+        listing.winner = bids.objects.filter(auction=listing).last().user
+        listing.save()
+        messages.success(request,f"{listing.winner} is winner")
 
     if request.method == "POST":
         
