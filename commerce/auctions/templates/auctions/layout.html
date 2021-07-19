@@ -44,7 +44,21 @@
                     <a class="nav-link" href="{% url 'register' %}">Register</a>
                 </li>
             {% endif %}
+            {% if user.is_authenticated %}
+                <form action="{% url 'search' %}" style="margin-left: 30%;" method="GET" class="form-inline form-group">
+                    {% csrf_token %} 
+                    <input type="text" name="q" placeholder="Search Here..." class="form-control" required>
+                    <input type="Submit" value="Search" class="btn btn-primary">
+                </form>
+            {% else %} 
+                <form action="{% url 'search' %}" style="margin-left: 50%;" method="GET" class="form-inline form-group">
+                    {% csrf_token %} 
+                    <input type="text" name="q" placeholder="Search Here..." class="form-control" required>
+                    <input type="Submit" value="Search" class="btn btn-primary">
+                </form>
+            {% endif %}
         </ul>
+       
         <hr>
         {% block body %}
         {% endblock %}

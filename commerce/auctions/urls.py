@@ -15,4 +15,5 @@ urlpatterns = [
     path("watchlist",views.watchlist,name="watchlist"),
     path("categorise",views.categories,name="categories"),
     path("<str:category>",views.displaycat,name="displaycat"),
+    path("search/",views.search,name="search"),
 ]

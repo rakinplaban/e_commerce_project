@@ -238,3 +238,12 @@ def watchlist(request):
     return render(request,"auctions/watchlist.html",{
         "listing" : listing
     })
+
+def search(request):
+    if request.method == "GET":
+        search = request.GET['q']
+        listing = auction_listing.objects.filter(title__contains=search)
+        return render(request,"auctions/index.html",{
+            "search" : search,
+            "listing" : listing
+        })
