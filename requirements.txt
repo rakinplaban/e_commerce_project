@@ -3,12 +3,12 @@ charset-normalizer==2.0.12
 dj-database-url==0.5.0
 Django==2.1.7
 django-heroku==0.3.1
-django-pyodbc-azure @ file:///Users/ktietz/demo/mc3/conda-bld/django-pyodbc-azure_1630655001752/work
+django-pyodbc-azure 
 gunicorn==20.1.0
 heroku==0.1.4
 idna==3.3
-psycopg2 @ file:///C:/ci/psycopg2_1612298715048/work
-pyodbc @ file:///C:/ci/pyodbc_1647407901467/work
+psycopg2 
+pyodbc 
 python-dateutil==1.5
 python-decouple==3.6
 pytz==2021.3
